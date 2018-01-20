@@ -24,7 +24,11 @@ def open_webbrowser_count(question,choices):
     counts = []
     for i in range(len(choices)):
         # 请求
-        req = requests.get(url='http://www.baidu.com/s', params={'wd': question + choices[i]})
+        session = requests.Session()
+        session.trust_env = False
+
+        req = session.get(url='http://www.baidu.com/s', params={'wd': question + choices[i]})
+        # req = requests.get()
         content = req.text
         index = content.find('百度为您找到相关结果约') + 11
         content = content[index:]
@@ -37,7 +41,11 @@ def open_webbrowser_count(question,choices):
 def count_base(question,choices):
     print('\n-- 方法3： 题目搜索结果包含选项词频计数法 --\n')
     # 请求
-    req = requests.get(url='http://www.baidu.com/s', params={'wd':question})
+    session = requests.Session()
+    session.trust_env = False
+
+    req = session.get(url='http://www.baidu.com/s', params={'wd':question})
+    #req = requests.get(url='http://www.baidu.com/s', params={'wd':question})
     content = req.text
     #print(content)
     counts = []
